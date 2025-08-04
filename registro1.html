@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Elettronico</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    input, button { margin: 5px 0; padding: 8px; width: 100%; }
+    .studente { margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    button.small { width: auto; padding: 5px 10px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Registro Presenze e Voti</h1>
+  <input type="text" id="nomeStudente" placeholder="Nome studente">
+  <button onclick="aggiungiStudente()">Aggiungi studente</button>
+  <div id="registro"></div>
+
+  <script>
+    let studenti = [];
+
+    function aggiornaRegistro() {
+      const div = document.getElementById("registro");
+      div.innerHTML = "";
+      studenti.forEach((studente, index) => {
+        const votiStr = studente.voti.length > 0 ? studente.voti.join(", ") : "Nessun voto";
+        div.innerHTML += `
+          <div class="studente">
+            <strong>${studente.nome}</strong><br>
+            Presente: <input type="checkbox" onchange="segnaPresenza(${index}, this.checked)" ${studente.presente ? "checked" : ""}><br>
+            Voti: ${votiStr}<br>
+            <button class="small" onclick="aggiungiVoto(${index})">Aggiungi voto</button>
+          </div>
+        `;
+      });
+    }
+
+    function aggiungiStudente() {
+      const nome = document.getElementById("nomeStudente").value.trim();
+      if (nome) {
+        studenti.push({ nome, presente: false, voti: [] });
+        document.getElementById("nomeStudente").value = "";
+        aggiornaRegistro();
+      }
+    }
+
+    function segnaPresenza(index, valore) {
+      studenti[index].presente = valore;
+    }
+
+    function aggiungiVoto(index) {
+      const voto = prompt("Inserisci voto (numero):");
+      const num = parseInt(voto);
+      if (!isNaN(num)) {
+        studenti[index].voti.push(num);
+        aggiornaRegistro();
+      }
+    }
+  </script>
+</body>
+</html>
