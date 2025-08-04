@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro Presenze e Voti</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #f9f9f9; }
+    h1 { text-align: center; color: #2c3e50; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+    th { background-color: #e0e0e0; }
+    input[type="text"], input[type="number"] { width: 90%; }
+    .button { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Registro Presenze e Voti</h1>
+  <table id="registro">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Presente</th>
+        <th>Voto</th>
+        <th>Azione</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button class="button" onclick="aggiungiRiga()">Aggiungi Studente</button>
+
+  <script>
+    function aggiungiRiga() {
+      const tbody = document.querySelector('#registro tbody');
+      const row = document.createElement('tr');
+
+      row.innerHTML = \`
+        <td><input type="text" placeholder="Nome"></td>
+        <td><input type="checkbox"></td>
+        <td><input type="number" min="0" max="10"></td>
+        <td><button onclick="this.parentElement.parentElement.remove()">Elimina</button></td>
+      \`;
+
+      tbody.appendChild(row);
+    }
+  </script>
+</body>
+</html>
